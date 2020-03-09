@@ -5,6 +5,7 @@ const {
   isArray,
   isObject,
   castToNumber,
+  castToString,
   getCaster
 } = require('../lib/types.js');
 
@@ -94,6 +95,7 @@ describe('validator module', () => {
 
 
   describe('casters', () => {
+    // castToNumber
     it('can cast values to a number', () => {
       expect(castToNumber(3)).toEqual(3);
       expect(castToNumber('3')).toEqual(3);
@@ -101,9 +103,28 @@ describe('validator module', () => {
       expect(castToNumber(false)).toEqual(0);
     });
 
-    it('throws if value is not castable to number', () => {
+    it('throws if value is not castable to a number', () => {
       expect(() => castToNumber('hi')).toThrowErrorMatchingSnapshot();
       expect(() => castToNumber({})).toThrowErrorMatchingSnapshot();
+    });
+
+    // castToString
+    it('can cast values to a string', () => {
+      expect(castToString(3)).toMatch('3');
+      expect(castToString('3')).toMatch('3');
+      expect(castToString([1, 2])).toMatch('[1,2]');
+      expect(castToString([])).toMatch('[]');
+      expect(castToString({ foo: 'bar' })).toMatch('{"foo":"bar"}');
+      expect(castToString({})).toMatch('');
+      expect(castToString(() => {})).toMatch('() => {}');
+      expect(castToString(true)).toMatch('true');
+      expect(castToString(false)).toMatch('false');
+      expect(castToString(null)).toMatch('null');
+    });
+
+    it('throws if value is not castable to a string', () => {
+      // expect(() => castToString(() => {})).toThrowErrorMatchingSnapshot();
+      // expect(() => castToString({})).toThrowErrorMatchingSnapshot();
     });
   });
 
