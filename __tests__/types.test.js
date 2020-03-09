@@ -22,6 +22,7 @@ describe('validator module', () => {
       expect(isNumber({ foo: 'bar' })).toBeFalsy();
       expect(isNumber(() => {})).toBeFalsy();
       expect(isNumber(true)).toBeFalsy();
+      expect(isNumber(undefined)).toBeFalsy();
       expect(isNumber(null)).toBeFalsy();
     });
   });
@@ -38,6 +39,7 @@ describe('validator module', () => {
       expect(isString({})).toBeFalsy();
       expect(isString(() => {})).toBeFalsy();
       expect(isString(true)).toBeFalsy();
+      expect(isString(undefined)).toBeFalsy();
       expect(isString(null)).toBeFalsy();
     });
   });
@@ -56,6 +58,7 @@ describe('validator module', () => {
       expect(isBoolean({})).toBeFalsy();
       expect(isBoolean(() => {})).toBeFalsy();
       expect(isBoolean(true)).toBeTruthy();
+      expect(isBoolean(undefined)).toBeFalsy();
       expect(isBoolean(null)).toBeFalsy();
     });
   });
@@ -72,6 +75,7 @@ describe('validator module', () => {
       expect(isArray({})).toBeFalsy();
       expect(isArray(() => {})).toBeFalsy();
       expect(isArray(true)).toBeFalsy();
+      expect(isArray(undefined)).toBeFalsy();
       expect(isArray(null)).toBeFalsy();
     });
   });
@@ -90,6 +94,7 @@ describe('validator module', () => {
       // Functions are objects
       expect(isObject(() => {})).toBeTruthy();
       expect(isObject(true)).toBeFalsy();
+      expect(isObject(undefined)).toBeFalsy();
       expect(isObject(null)).toBeFalsy();
     });
   });
@@ -109,6 +114,7 @@ describe('validator module', () => {
       expect(() => castToNumber('3 2')).toThrowErrorMatchingSnapshot();
       expect(() => castToNumber({})).toThrowErrorMatchingSnapshot();
       expect(() => castToNumber(() => {})).toThrowErrorMatchingSnapshot();
+      expect(() => castToNumber(undefined)).toThrowErrorMatchingSnapshot();
       expect(() => castToNumber(null)).toThrowErrorMatchingSnapshot();
     });
 
@@ -123,6 +129,7 @@ describe('validator module', () => {
       expect(castToString(() => {})).toMatch('() => {}');
       expect(castToString(true)).toMatch('true');
       expect(castToString(false)).toMatch('false');
+      expect(castToString(undefined)).toMatch('');
     });
 
     it('throws if value is not castable to a string', () => {
@@ -148,6 +155,7 @@ describe('validator module', () => {
       expect(() => castToBoolean({ foo: 'bar' })).toThrowErrorMatchingSnapshot();
       expect(() => castToBoolean({})).toThrowErrorMatchingSnapshot();
       expect(() => castToBoolean(() => {})).toThrowErrorMatchingSnapshot();
+      expect(() => castToBoolean(undefined)).toThrowErrorMatchingSnapshot();
       expect(() => castToBoolean(null)).toThrowErrorMatchingSnapshot();
     });
 

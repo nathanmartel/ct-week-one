@@ -16,7 +16,9 @@ exports[`validator module casters throws if value is not castable to a boolean 7
 
 exports[`validator module casters throws if value is not castable to a boolean 8`] = `"Cannot cast >>() => {}<< to Boolean"`;
 
-exports[`validator module casters throws if value is not castable to a boolean 9`] = `"Cannot cast >>null<< to Boolean"`;
+exports[`validator module casters throws if value is not castable to a boolean 9`] = `"Cannot cast >>undefined<< to Boolean"`;
+
+exports[`validator module casters throws if value is not castable to a boolean 10`] = `"Cannot cast >>null<< to Boolean"`;
 
 exports[`validator module casters throws if value is not castable to a number 1`] = `"Cannot cast >>hi<< to Number"`;
 
@@ -26,6 +28,8 @@ exports[`validator module casters throws if value is not castable to a number 3`
 
 exports[`validator module casters throws if value is not castable to a number 4`] = `"Cannot cast >>() => {}<< to Number"`;
 
-exports[`validator module casters throws if value is not castable to a number 5`] = `"Cannot cast >>null<< to Number"`;
+exports[`validator module casters throws if value is not castable to a number 5`] = `"Cannot cast >>undefined<< to Number"`;
+
+exports[`validator module casters throws if value is not castable to a number 6`] = `"Cannot cast >>null<< to Number"`;
 
 exports[`validator module casters throws if value is not castable to a string 1`] = `"Cannot cast >>null<< to String"`;
