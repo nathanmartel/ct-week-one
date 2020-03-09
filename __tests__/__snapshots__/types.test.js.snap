@@ -25,3 +25,7 @@ exports[`validator module casters throws if value is not castable to a number 2`
 exports[`validator module casters throws if value is not castable to a number 3`] = `"Cannot cast >>[object Object]<< to Number"`;
 
 exports[`validator module casters throws if value is not castable to a number 4`] = `"Cannot cast >>() => {}<< to Number"`;
+
+exports[`validator module casters throws if value is not castable to a number 5`] = `"Cannot cast >>null<< to Number"`;
+
+exports[`validator module casters throws if value is not castable to a string 1`] = `"Cannot cast >>null<< to String"`;

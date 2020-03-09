@@ -109,6 +109,7 @@ describe('validator module', () => {
       expect(() => castToNumber('3 2')).toThrowErrorMatchingSnapshot();
       expect(() => castToNumber({})).toThrowErrorMatchingSnapshot();
       expect(() => castToNumber(() => {})).toThrowErrorMatchingSnapshot();
+      expect(() => castToNumber(null)).toThrowErrorMatchingSnapshot();
     });
 
     // castToString
@@ -122,10 +123,10 @@ describe('validator module', () => {
       expect(castToString(() => {})).toMatch('() => {}');
       expect(castToString(true)).toMatch('true');
       expect(castToString(false)).toMatch('false');
-      expect(castToString(null)).toEqual('null');
     });
 
     it('throws if value is not castable to a string', () => {
+      expect(() => castToString(null)).toThrowErrorMatchingSnapshot();
     });
 
     // castToBoolean
