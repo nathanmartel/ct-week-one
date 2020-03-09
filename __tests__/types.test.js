@@ -6,6 +6,7 @@ const {
   isObject,
   castToNumber,
   castToString,
+  castToBoolean,
   getCaster
 } = require('../lib/types.js');
 
@@ -105,7 +106,9 @@ describe('validator module', () => {
 
     it('throws if value is not castable to a number', () => {
       expect(() => castToNumber('hi')).toThrowErrorMatchingSnapshot();
+      expect(() => castToNumber('3 2')).toThrowErrorMatchingSnapshot();
       expect(() => castToNumber({})).toThrowErrorMatchingSnapshot();
+      expect(() => castToNumber(() => {})).toThrowErrorMatchingSnapshot();
     });
 
     // castToString
@@ -119,17 +122,40 @@ describe('validator module', () => {
       expect(castToString(() => {})).toMatch('() => {}');
       expect(castToString(true)).toMatch('true');
       expect(castToString(false)).toMatch('false');
-      expect(castToString(null)).toMatch('null');
+      expect(castToString(null)).toEqual('null');
     });
 
     it('throws if value is not castable to a string', () => {
-      // expect(() => castToString(() => {})).toThrowErrorMatchingSnapshot();
-      // expect(() => castToString({})).toThrowErrorMatchingSnapshot();
     });
+
+    // castToBoolean
+    it('can cast values to a string', () => {
+      expect(castToBoolean(0)).toEqual(false);
+      expect(castToBoolean('0')).toEqual(false);
+      expect(castToBoolean('1')).toEqual(true);
+      expect(castToBoolean(1)).toEqual(true);
+      expect(castToBoolean(true)).toEqual(true);
+      expect(castToBoolean(false)).toEqual(false);
+    });
+
+    it('throws if value is not castable to a boolean', () => {
+      expect(() => castToBoolean('3')).toThrowErrorMatchingSnapshot();
+      expect(() => castToBoolean('hi')).toThrowErrorMatchingSnapshot();
+      expect(() => castToBoolean('3 2')).toThrowErrorMatchingSnapshot();
+      expect(() => castToBoolean([1, 2])).toThrowErrorMatchingSnapshot();
+      expect(() => castToBoolean([])).toThrowErrorMatchingSnapshot();
+      expect(() => castToBoolean({ foo: 'bar' })).toThrowErrorMatchingSnapshot();
+      expect(() => castToBoolean({})).toThrowErrorMatchingSnapshot();
+      expect(() => castToBoolean(() => {})).toThrowErrorMatchingSnapshot();
+      expect(() => castToBoolean(null)).toThrowErrorMatchingSnapshot();
+    });
+
   });
 
   it('can get the right caster', () => {
     expect(getCaster(Number)).toEqual(castToNumber);
+    expect(getCaster(String)).toEqual(castToString);
+    expect(getCaster(Boolean)).toEqual(castToBoolean);
     expect(getCaster(Promise)).toBeNull();
   });
 });
