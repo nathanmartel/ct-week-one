@@ -144,7 +144,6 @@ describe('validator module', () => {
       expect(castToString([])).toMatch('[]');
       expect(castToString({ foo: 'bar' })).toMatch('{"foo":"bar"}');
       expect(castToString({})).toMatch('');
-      expect(castToString(() => {})).toMatch('() => {}');
       expect(castToString(true)).toMatch('true');
       expect(castToString(false)).toMatch('false');
       expect(castToString(undefined)).toMatch('');
@@ -152,6 +151,7 @@ describe('validator module', () => {
 
     it('throws if value is not castable to a string', () => {
       expect(() => castToString(null)).toThrowErrorMatchingSnapshot();
+      expect(() => castToString(() => {})).toThrowErrorMatchingSnapshot();
     });
 
     // castToBoolean

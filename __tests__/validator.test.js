@@ -13,7 +13,7 @@ describe('validator module', () => {
         age: 5,
         weight: '20 lbs'
       };
-      expect(nameValidator.validate(dog)).toThrowError('Missing required key >>name<<');
+      expect(() => nameValidator.validate(dog)).toThrowError('Missing required key >>name<<');
     });    
 
     it('2a. Validates a required key of wrong type that is castable', () => {
@@ -28,11 +28,11 @@ describe('validator module', () => {
 
     it('2b. Throws an error on a required key of wrong type that is not castable', () => {
       const dog = {
-        name: null,
+        name: () => {},
         age: 5,
         weight: '20 lbs'
       };
-      expect(nameValidator.validate(dog)).toThrowError('Cannot cast >>null<< to String');
+      expect(() => nameValidator.validate(dog)).toThrowError('Cannot cast >>() => {}<< to String');
     });    
 
     it('3. Validates a required key of right type', () => {
@@ -66,9 +66,9 @@ describe('validator module', () => {
       const dog = {
         name: 'spot',
         age: 5,
-        weight: function(a) { return a + 2; }
+        weight: () => {}
       };
-      expect(weightValidator.validate(dog)).toThrowError('Cannot cast >>null<< to String');
+      expect(() => weightValidator.validate(dog)).toThrowError('Cannot cast >>() => {}<< to String');
     });    
 
     it('6. Validates a non-required key of right type', () => {
