@@ -21,8 +21,8 @@ jest.mock('fs', () => ({
 
     // Ryan's mock that works
     mkdir: jest.fn(() => Promise.resolve()),
-    readdir: jest.fn(() => Promise.resolve()),
-    readFile: jest.fn(() => Promise.resolve()),
+    readdir: jest.fn(() => Promise.resolve(['demo1.json', 'demo2.json'])),
+    readFile: jest.fn(() => Promise.resolve('{"id": "1","name":"Lenny"}')),
     writeFile: jest.fn(() => Promise.resolve()),
     unlink: jest.fn(() => Promise.resolve()),
   }
@@ -82,40 +82,34 @@ describe('File System module', () => {
   });
 
   it('Should read all files in a directory as objects', () => {
-    const path = './example';
-    return readDirectoryJSON(path)
+    return readDirectoryJSON('./fake')
       .then((result) => {
         expect(fs.readdir)
-          .toHaveBeenCalledWith(path);
+          .toHaveBeenCalledWith('./fake');
         expect(fs.readFile)
-          .toHaveBeenCalledWith('./example/data.json');
+          .toHaveBeenCalledWith('demo1.json');
+        expect(fs.readFile)
+          .toHaveBeenCalledWith('demo2.json');
         expect(result)
-          .toEqual({
-            id: '1',
-            name : 'Lenny'
-          },
-          {
-            id: '2',
-            name: 'Bruce'
-          });
+          .toEqual('{"id": "1","name":"Lenny"}, {"id": "1","name":"Lenny"}');
       }); 
   });
 
   it('Should update a files JSON', () => {
     const path = './example/data.json';
-    const newObj = { weight: '175 lbs'};
+    const newObj = { weight: '175 lbs' };
     return updateJSON(path, newObj)
       .then(result => {
         expect(fs.readFile)
           .toHaveBeenCalledWith(path);
         expect(fs.writeFile)
-          .toHaveBeenCalledWith(path, '{"weight":"175 lbs"}');
+          .toHaveBeenCalledWith(path, '{"id":"1","name":"Lenny","weight":"175 lbs"}');
         expect(result)
-          .toEqual(`{
+          .toEqual({
             id: '1', 
             name: 'Lenny', 
             weight: '175 lbs' 
-          }`);
+          });
       });     
   });
 
