@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`validator module casters throws if value is not castable to a boolean 1`] = `"Cannot cast >>3<< to Boolean"`;
+
+exports[`validator module casters throws if value is not castable to a boolean 2`] = `"Cannot cast >>hi<< to Boolean"`;
+
+exports[`validator module casters throws if value is not castable to a boolean 3`] = `"Cannot cast >>3 2<< to Boolean"`;
+
+exports[`validator module casters throws if value is not castable to a boolean 4`] = `"Cannot cast >>1,2<< to Boolean"`;
+
+exports[`validator module casters throws if value is not castable to a boolean 5`] = `"Cannot cast >><< to Boolean"`;
+
+exports[`validator module casters throws if value is not castable to a boolean 6`] = `"Cannot cast >>[object Object]<< to Boolean"`;
+
+exports[`validator module casters throws if value is not castable to a boolean 7`] = `"Cannot cast >>[object Object]<< to Boolean"`;
+
+exports[`validator module casters throws if value is not castable to a boolean 8`] = `"Cannot cast >>() => {}<< to Boolean"`;
+
+exports[`validator module casters throws if value is not castable to a boolean 9`] = `"Cannot cast >>undefined<< to Boolean"`;
+
+exports[`validator module casters throws if value is not castable to a boolean 10`] = `"Cannot cast >>null<< to Boolean"`;
+
+exports[`validator module casters throws if value is not castable to a number 1`] = `"Cannot cast >>hi<< to Number"`;
+
+exports[`validator module casters throws if value is not castable to a number 2`] = `"Cannot cast >>3 2<< to Number"`;
+
+exports[`validator module casters throws if value is not castable to a number 3`] = `"Cannot cast >>[object Object]<< to Number"`;
+
+exports[`validator module casters throws if value is not castable to a number 4`] = `"Cannot cast >>() => {}<< to Number"`;
+
+exports[`validator module casters throws if value is not castable to a number 5`] = `"Cannot cast >>undefined<< to Number"`;
+
+exports[`validator module casters throws if value is not castable to a number 6`] = `"Cannot cast >>null<< to Number"`;
+
+exports[`validator module casters throws if value is not castable to a string 1`] = `"Cannot cast >>null<< to String"`;
+
+exports[`validator module casters throws if value is not castable to a string 2`] = `"Cannot cast >>() => {}<< to String"`;
