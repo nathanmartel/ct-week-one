@@ -21,7 +21,7 @@ jest.mock('fs', () => ({
 
     // Ryan's mock that works
     mkdir: jest.fn(() => Promise.resolve()),
-    readdir: jest.fn(() => Promise.resolve(['demo1.json', 'demo2.json'])),
+    readdir: jest.fn(() => Promise.resolve(['hooray1.json', 'hello.json'])),
     readFile: jest.fn(() => Promise.resolve('{"id": "1","name":"Lenny"}')),
     writeFile: jest.fn(() => Promise.resolve()),
     unlink: jest.fn(() => Promise.resolve()),
@@ -87,11 +87,18 @@ describe('File System module', () => {
         expect(fs.readdir)
           .toHaveBeenCalledWith('./fake');
         expect(fs.readFile)
-          .toHaveBeenCalledWith('demo1.json');
+          .toHaveBeenCalledWith('./fake/hooray1.json');
         expect(fs.readFile)
-          .toHaveBeenCalledWith('demo2.json');
+          .toHaveBeenCalledWith('./fake/hello.json');
         expect(result)
-          .toEqual('{"id": "1","name":"Lenny"}, {"id": "1","name":"Lenny"}');
+          .toEqual([{
+            id: '1', 
+            name: 'Lenny' 
+          },
+          {
+            id: '1', 
+            name: 'Lenny' 
+          }]);
       }); 
   });
 
