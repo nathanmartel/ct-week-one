@@ -1,6 +1,9 @@
 const Schema = require('../lib/Schema.js');
 const Model = require('../lib/Model.js');
-const fs = require('fs');
+const {
+  readDirectoryJSON,
+  deleteFile
+} = require('../lib/file-system.js');
 
 const dogSchema = new Schema({
   name: {
@@ -17,9 +20,12 @@ const dogSchema = new Schema({
 
 const Dog = new Model('Dog', dogSchema);
 
-// afterEach(() => {
-//   fs.unlink('Dog/*');
-// });
+afterEach(() => {
+  readDirectoryJSON('Dog')
+    .then((files) => {
+      files.forEach(file => deleteFile(`Dog/${file._id}`));
+    });
+});
 
 // Mock data
 // jest.mock('fs', () => ({
