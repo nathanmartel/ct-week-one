@@ -1,5 +1,6 @@
 const Schema = require('../lib/Schema.js');
 const Model = require('../lib/Model.js');
+const fs = require('fs');
 
 const dogSchema = new Schema({
   name: {
@@ -15,6 +16,10 @@ const dogSchema = new Schema({
 });
 
 const Dog = new Model('Dog', dogSchema);
+
+// afterEach(() => {
+//   fs.unlink('Dog/*');
+// });
 
 // Mock data
 // jest.mock('fs', () => ({
@@ -66,5 +71,43 @@ describe('Model module', () => {
       });
   });
 
+  it('Should find all dogs', () => {  
+    Dog.create({ name: 'Pickles', age: 7, weight: '25 lbs' });
+    Dog.create({ name: 'Fuzzy', age: 2, weight: '7 lbs' });
+    Dog.find()
+      .then((result) => { 
+        expect(result)
+          .toEqual([{
+            _id: expect.any(String),
+            name: 'Pickles', 
+            age: 7, 
+            weight: '25 lbs'
+          }, {
+            _id: expect.any(String),
+            name: 'Pickles', 
+            age: 7, 
+            weight: '25 lbs'
+          }]);
+      });
+  });
+
+  it('Should find by ID and update', () => {  
+    let idToFind;
+    Dog.create({ name: 'Pickles', age: 7, weight: '25 lbs' })
+      .then((result) => {
+        idToFind = result._id;
+      });
+    Dog.findByIdAndUpdate(`${Dog.name}/${idToFind}`, { name: 'Franky' })
+      .then((result) => { 
+        expect(result)
+          .toEqual({
+            _id: idToFind, 
+            name: 'Franky', 
+            age: 7, 
+            weight: '25 lbs'
+          });
+      });
+
+  });
 
 });
