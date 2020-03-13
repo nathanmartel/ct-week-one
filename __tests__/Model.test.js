@@ -20,7 +20,7 @@ const dogSchema = new Schema({
 
 const Dog = new Model('Dog', dogSchema);
 
-afterEach(() => {
+afterAll(() => {
   readDirectoryJSON('Dog')
     .then((files) => {
       files.forEach(file => deleteFile(`Dog/${file._id}`));
@@ -39,43 +39,6 @@ afterEach(() => {
 // }));
 
 describe('Model module', () => {
-
-  it('Should create a file', () => {  
-    return Dog.create({ name: 'Pickles', age: 7, weight: '25 lbs' })
-      .then((result) => {
-        // Not necessary to test calls since we handled it yesterday, but this does show what's happening under the hood.
-        // expect(fs.mkdir)
-        //   .toHaveBeenCalledWith('Dog', { recursive : true });
-        // expect(fs.writeFile)
-        //   .toHaveBeenCalledWith(`Dog/${result._id}`, JSON.stringify({ _id: result._id, name: 'Pickles', age: 7, weight: '25 lbs' }));
-        expect(result)
-          .toEqual({
-            _id: expect.any(String), 
-            name: 'Pickles', 
-            age: 7, 
-            weight: '25 lbs'
-          });
-      });
-  });
-
-
-  it('Should find a record by ID', () => {  
-    let idToFind;
-    Dog.create({ name: 'Pickles', age: 7, weight: '25 lbs' })
-      .then((result) => {
-        idToFind = result._id;
-      });
-    Dog.findById(idToFind)
-      .then((result) => { 
-        expect(result)
-          .toEqual({
-            _id: idToFind, 
-            name: 'Pickles', 
-            age: 7, 
-            weight: '25 lbs'
-          });
-      });
-  });
 
   it('Should find all dogs', () => {  
     Dog.create({ name: 'Pickles', age: 7, weight: '25 lbs' });
@@ -97,6 +60,42 @@ describe('Model module', () => {
       });
   });
 
+  it('Should create a file', () => {  
+    return Dog.create({ name: 'Pickles', age: 7, weight: '25 lbs' })
+      .then((result) => {
+        // Not necessary to test calls since we handled it yesterday, but this does show what's happening under the hood.
+        // expect(fs.mkdir)
+        //   .toHaveBeenCalledWith('Dog', { recursive : true });
+        // expect(fs.writeFile)
+        //   .toHaveBeenCalledWith(`Dog/${result._id}`, JSON.stringify({ _id: result._id, name: 'Pickles', age: 7, weight: '25 lbs' }));
+        expect(result)
+          .toEqual({
+            _id: expect.any(String), 
+            name: 'Pickles', 
+            age: 7, 
+            weight: '25 lbs'
+          });
+      });
+  });
+
+  it('Should find a record by ID', () => {  
+    let idToFind;
+    Dog.create({ name: 'Pickles', age: 7, weight: '25 lbs' })
+      .then((result) => {
+        idToFind = result._id;
+      });
+    Dog.findById(idToFind)
+      .then((result) => { 
+        expect(result)
+          .toEqual({
+            _id: idToFind, 
+            name: 'Pickles', 
+            age: 7, 
+            weight: '25 lbs'
+          });
+      });
+  });
+
   it('Should find by ID and update', () => {  
     let idToFind;
     Dog.create({ name: 'Pickles', age: 7, weight: '25 lbs' })
@@ -113,7 +112,25 @@ describe('Model module', () => {
             weight: '25 lbs'
           });
       });
+  });
 
+  it('Should find by ID and delete', () => {  
+    let idToFind;
+    Dog.create({ name: 'Pickles', age: 7, weight: '25 lbs' })
+      .then((result) => {
+        idToFind = result._id;
+      });
+    Dog.findByIdAndDelete(`${Dog.name}/${idToFind}`)
+      .then((result) => { 
+        expect(result)
+          .toEqual({
+            _id: idToFind, 
+            // THIS SHOULD NOT PASS
+            name: 'Franky', 
+            age: 7, 
+            weight: '25 lbs'
+          });
+      });
   });
 
 });
