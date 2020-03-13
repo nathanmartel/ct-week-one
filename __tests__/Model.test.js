@@ -1,14 +1,21 @@
 const fs = require('fs').promises;
-const uuid = require('uuid/v4');
-const randomId = uuid();
+const Schema = require('../lib/Schema.js');
+const Model = require('../lib/Model.js');
 
-const {
-  create,
-  findById,
-  find,
-  findByIdAndUpdate,
-  findByIdAndDelete
-} = require('../lib/Model.js');
+const dogSchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  age: {
+    type: Number
+  },
+  weight: {
+    type: String
+  }
+});
+
+const Dog = new Model('Dog', dogSchema);
 
 const {
   mkdirp,
@@ -31,14 +38,21 @@ jest.mock('fs', () => ({
 
 describe('Model module', () => {
 
-  it('Should make a directory and all parent directories', () => {
-
-    // Mock test - Just see if the function was called correctly.
-    const path = './newpath/here';
-    return mkdirp(path)
-      .then(() => {
-        expect(fs.mkdir)
-          .toHaveBeenCalledWith(path, { recursive : true });
+  it('Should create a file', () => {  
+    return Dog.create({ name: 'Pickles', age: 7, weight: '25 lbs' })
+      .then((result) => {
+        // Not necessary to test calls since we handled it yesterday, but this does show what's happening under the hood.
+        // expect(fs.mkdir)
+        //   .toHaveBeenCalledWith('Dog', { recursive : true });
+        // expect(fs.writeFile)
+        //   .toHaveBeenCalledWith(`Dog/${result._id}`, JSON.stringify({ _id: result._id, name: 'Pickles', age: 7, weight: '25 lbs' }));
+        expect(result)
+          .toEqual({
+            _id: expect.any(String), 
+            name: 'Pickles', 
+            age: 7, 
+            weight: '25 lbs'
+          });
       });
   });
 
