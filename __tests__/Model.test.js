@@ -1,4 +1,3 @@
-const fs = require('fs').promises;
 const Schema = require('../lib/Schema.js');
 const Model = require('../lib/Model.js');
 
@@ -17,24 +16,16 @@ const dogSchema = new Schema({
 
 const Dog = new Model('Dog', dogSchema);
 
-const {
-  mkdirp,
-  writeJSON,
-  readJSON,
-  readDirectoryJSON,
-  updateJSON,
-  deleteFile
-} = require('../lib/file-system.js');
-
-jest.mock('fs', () => ({
-  promises: {
-    mkdir: jest.fn(() => Promise.resolve()),
-    readdir: jest.fn(() => Promise.resolve(['hooray1.json', 'hello.json'])),
-    readFile: jest.fn(() => Promise.resolve('{"id": "1","name":"Lenny"}')),
-    writeFile: jest.fn(() => Promise.resolve()),
-    unlink: jest.fn(() => Promise.resolve()),
-  }
-}));
+// Mock data
+// jest.mock('fs', () => ({
+//   promises: {
+//     mkdir: jest.fn(() => Promise.resolve()),
+//     readdir: jest.fn(() => Promise.resolve(['hooray1.json', 'hello.json'])),
+//     readFile: jest.fn(() => Promise.resolve('{"id": "1","name":"Lenny"}')),
+//     writeFile: jest.fn(() => Promise.resolve()),
+//     unlink: jest.fn(() => Promise.resolve()),
+//   }
+// }));
 
 describe('Model module', () => {
 
@@ -55,5 +46,25 @@ describe('Model module', () => {
           });
       });
   });
+
+
+  it('Should find a record by ID', () => {  
+    let idToFind;
+    Dog.create({ name: 'Pickles', age: 7, weight: '25 lbs' })
+      .then((result) => {
+        idToFind = result._id;
+      });
+    Dog.findById(idToFind)
+      .then((result) => { 
+        expect(result)
+          .toEqual({
+            _id: idToFind, 
+            name: 'Pickles', 
+            age: 7, 
+            weight: '25 lbs'
+          });
+      });
+  });
+
 
 });
